@@ -1,5 +1,6 @@
 // authService.ts
 import api from './api';
+import { Colors } from '../constants/Colors';
 
 export const authService = {
   async login(email: string, password: string) {

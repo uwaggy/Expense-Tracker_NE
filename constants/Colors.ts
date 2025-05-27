@@ -1,10 +1,10 @@
 export default {
-  primary: '#0A84FF',   // Blue
-  success: '#30D158',   // Green
-  warning: '#FF9500',   // Orange
-  error: '#FF453A',     // Red
-  info: '#5AC8FA',      // Light Blue
-  accent: '#FF2D55',    // Pink
+  primary: '#1B4332',   // Dark Green
+  success: '#2D6A4F',   // Darker Green
+  warning: '#40916C',   // Medium Green
+  error: '#D00000',     // Dark Red
+  info: '#40916C',      // Medium Green
+  accent: '#74C69D',    // Light Green
   
   // Neutral colors
   black: '#000000',

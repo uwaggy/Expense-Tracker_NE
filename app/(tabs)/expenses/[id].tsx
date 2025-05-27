@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   backButton: {
-    backgroundColor: '#0A84FF',
+    backgroundColor: '#1B4332',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 12,
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   editButton: {
-    backgroundColor: '#0A84FF',
+    backgroundColor: '#1B4332',
     borderRadius: 12,
     paddingVertical: 12,
     paddingHorizontal: 16,

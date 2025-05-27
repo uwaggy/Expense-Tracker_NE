@@ -90,20 +90,20 @@ export default function CategoryPicker({
 
 function getCategoryColor(category: string): string {
   const categoryColors: { [key: string]: string } = {
-    Food: '#FF9500',
-    Transportation: '#FF2D55',
-    Entertainment: '#5AC8FA',
-    Shopping: '#007AFF',
-    Housing: '#5856D6',
-    Utilities: '#AF52DE',
-    Healthcare: '#FF3B30',
-    Education: '#34C759',
-    Travel: '#FFCC00',
-    Personal: '#BF5AF2',
-    Other: '#64D2FF',
+    Food: '#2D6A4F',
+    Transportation: '#40916C',
+    Entertainment: '#74C69D',
+    Shopping: '#95D5B2',
+    Housing: '#B7E4C7',
+    Utilities: '#D8F3DC',
+    Healthcare: '#1B4332',
+    Education: '#2D6A4F',
+    Travel: '#40916C',
+    Personal: '#74C69D',
+    Other: '#95D5B2',
   };
   
-  return categoryColors[category] || '#64D2FF';
+  return categoryColors[category] || '#95D5B2';
 }
 
 const styles = StyleSheet.create({

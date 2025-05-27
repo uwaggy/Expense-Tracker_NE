@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   retryButton: {
-    backgroundColor: '#0A84FF',
+    backgroundColor: '#1B4332',
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   actionText: {
     fontSize: 14,
     fontWeight: '500',
-    color: Colors.primary,
+    color: '#1B4332',
     marginLeft: 6,
   },
   listContainer: {

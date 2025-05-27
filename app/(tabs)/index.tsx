@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
   },
   balanceCard: {
     margin: 16,
-    backgroundColor: '#0A84FF',
+    backgroundColor: '#1B4332',
     borderRadius: 16,
     padding: 24,
     shadowColor: '#000',
@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
   alertCard: {
     margin: 16,
     marginTop: 0,
-    backgroundColor: '#FFF9ED',
+    backgroundColor: '#E8F5E9',
     borderRadius: 12,
     padding: 16,
     flexDirection: 'row',
@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
   alertTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#FF9500',
+    color: '#1B4332',
     marginBottom: 4,
   },
   alertMessage: {

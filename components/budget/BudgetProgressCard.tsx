@@ -14,11 +14,11 @@ interface BudgetProgressCardProps {
 export default function BudgetProgressCard({ budget }: BudgetProgressCardProps) {
   const percentage = Math.min(100, (parseFloat(budget.currentAmount) / parseFloat(budget.limit)) * 100);
   
-  let statusColor = '#30D158'; // Green for safe
+  let statusColor = '#2D6A4F'; // Dark Green for safe
   if (percentage >= 90) {
-    statusColor = '#FF453A'; // Red for danger
+    statusColor = '#D00000'; // Dark Red for danger
   } else if (percentage >= 75) {
-    statusColor = '#FF9500'; // Orange for warning
+    statusColor = '#40916C'; // Medium Green for warning
   }
 
   return (

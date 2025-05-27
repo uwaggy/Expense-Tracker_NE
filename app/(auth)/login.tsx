@@ -9,7 +9,6 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/hooks/useAuth';
@@ -80,15 +79,9 @@ export default function LoginScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <View style={styles.logoContainer}>
-        <Image
-          source={{ uri: 'https://images.pexels.com/photos/6802042/pexels-photo-6802042.jpeg' }}
-          style={styles.logoBackground}
-        />
-        <View style={styles.overlay}>
-          <Text style={styles.title}>FinTrack</Text>
-          <Text style={styles.subtitle}>Personal Finance Tracker</Text>
-        </View>
+      <View style={styles.header}>
+        <Text style={styles.title}>FinTrack</Text>
+        <Text style={styles.subtitle}>Personal Finance Tracker</Text>
       </View>
 
       <View style={styles.formContainer}>
@@ -96,7 +89,7 @@ export default function LoginScreen() {
         <Text style={styles.loginText}>Log in to your account</Text>
 
         <View style={styles.inputContainer}>
-          <Mail size={20} color="#0A84FF" style={styles.inputIcon} />
+          <Mail size={20} color="#1B4332" style={styles.inputIcon} />
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -114,7 +107,7 @@ export default function LoginScreen() {
         ) : null}
 
         <View style={styles.inputContainer}>
-          <Lock size={20} color="#0A84FF" style={styles.inputIcon} />
+          <Lock size={20} color="#1B4332" style={styles.inputIcon} />
           <TextInput
             style={styles.input}
             placeholder="Password"
@@ -151,21 +144,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  logoContainer: {
-    height: '40%',
-    position: 'relative',
-  },
-  logoBackground: {
-    width: '100%',
-    height: '100%',
-  },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  header: {
+    height: '30%',
+    backgroundColor: '#1B4332',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -231,7 +212,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   loginButton: {
-    backgroundColor: '#0A84FF',
+    backgroundColor: '#1B4332',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',

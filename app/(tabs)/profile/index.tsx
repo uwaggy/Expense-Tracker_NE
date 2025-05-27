@@ -4,20 +4,18 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   ScrollView,
   Switch,
   Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/hooks/useAuth';
-import { LogOut, Bell, Moon, Shield, CircleHelp as HelpCircle, ChevronRight, CreditCard } from 'lucide-react-native';
+import { LogOut, Bell, Moon, Shield, CircleHelp as HelpCircle, ChevronRight, CreditCard, User } from 'lucide-react-native';
 import Colors from '@/constants/Colors';
 
 export default function ProfileScreen() {
   const router = useRouter();
   const { user, logout } = useAuth();
-  console.log("user", user);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
 
@@ -41,13 +39,12 @@ export default function ProfileScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profileHeader}>
-        <Image
-          source={{ uri: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg' }}
-          style={styles.profileImage}
-        />
+        <View style={styles.avatarContainer}>
+          <User size={40} color="#FFFFFF" />
+        </View>
         <View style={styles.profileInfo}>
-          <Text style={styles.profileName}>{user?.username || 'John Doe'}</Text>
-          <Text style={styles.profileEmail}>{user?.username || 'john.doe@example.com'}</Text>
+          <Text style={styles.profileName}>{user?.email || 'User'}</Text>
+          <Text style={styles.profileEmail}>{user?.email || 'user@example.com'}</Text>
         </View>
       </View>
 
@@ -56,26 +53,26 @@ export default function ProfileScreen() {
         
         <View style={styles.settingItem}>
           <View style={styles.settingLeft}>
-            <Bell size={20} color="#0A84FF" style={styles.settingIcon} />
+            <Bell size={20} color="#1B4332" style={styles.settingIcon} />
             <Text style={styles.settingLabel}>Notifications</Text>
           </View>
           <Switch
             value={notificationsEnabled}
             onValueChange={setNotificationsEnabled}
-            trackColor={{ false: '#E5E5EA', true: '#0A84FF' }}
+            trackColor={{ false: '#E5E5EA', true: '#1B4332' }}
             thumbColor="#FFFFFF"
           />
         </View>
         
         <View style={styles.settingItem}>
           <View style={styles.settingLeft}>
-            <Moon size={20} color="#AF52DE" style={styles.settingIcon} />
+            <Moon size={20} color="#1B4332" style={styles.settingIcon} />
             <Text style={styles.settingLabel}>Dark Mode</Text>
           </View>
           <Switch
             value={isDarkMode}
             onValueChange={setIsDarkMode}
-            trackColor={{ false: '#E5E5EA', true: '#0A84FF' }}
+            trackColor={{ false: '#E5E5EA', true: '#1B4332' }}
             thumbColor="#FFFFFF"
           />
         </View>
@@ -86,7 +83,7 @@ export default function ProfileScreen() {
         
         <TouchableOpacity style={styles.menuItem}>
           <View style={styles.menuLeft}>
-            <CreditCard size={20} color="#FF9500" style={styles.menuIcon} />
+            <CreditCard size={20} color="#1B4332" style={styles.menuIcon} />
             <Text style={styles.menuLabel}>Manage Payment Methods</Text>
           </View>
           <ChevronRight size={20} color="#8E8E93" />
@@ -98,7 +95,7 @@ export default function ProfileScreen() {
         
         <TouchableOpacity style={styles.menuItem}>
           <View style={styles.menuLeft}>
-            <Shield size={20} color="#34C759" style={styles.menuIcon} />
+            <Shield size={20} color="#1B4332" style={styles.menuIcon} />
             <Text style={styles.menuLabel}>Privacy Settings</Text>
           </View>
           <ChevronRight size={20} color="#8E8E93" />
@@ -106,7 +103,7 @@ export default function ProfileScreen() {
         
         <TouchableOpacity style={styles.menuItem}>
           <View style={styles.menuLeft}>
-            <HelpCircle size={20} color="#5AC8FA" style={styles.menuIcon} />
+            <HelpCircle size={20} color="#1B4332" style={styles.menuIcon} />
             <Text style={styles.menuLabel}>Help & Support</Text>
           </View>
           <ChevronRight size={20} color="#8E8E93" />
@@ -139,11 +136,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E5E5EA',
   },
-  profileImage: {
+  avatarContainer: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: '#1B4332',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   profileInfo: {
     marginLeft: 16,
@@ -211,7 +210,7 @@ const styles = StyleSheet.create({
     color: '#1C1C1E',
   },
   logoutButton: {
-    backgroundColor: '#FF453A',
+    backgroundColor: '#1B4332',
     margin: 20,
     padding: 16,
     borderRadius: 12,
@@ -230,7 +229,6 @@ const styles = StyleSheet.create({
   versionText: {
     textAlign: 'center',
     color: '#8E8E93',
-    fontSize: 14,
-    marginBottom: 30,
+    marginBottom: 20,
   },
 });
