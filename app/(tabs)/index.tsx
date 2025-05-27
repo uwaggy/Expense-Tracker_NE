@@ -14,7 +14,12 @@ import { useAuth } from '@/hooks/useAuth';
 import { PieChart, LineChart } from 'react-native-chart-kit';
 import { formatCurrency } from '@/utils/formatters';
 import { Dimensions } from 'react-native';
-import { CircleAlert as AlertCircle, TrendingUp, TrendingDown, DollarSign } from 'lucide-react-native';
+import {
+  CircleAlert as AlertCircle,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+} from 'lucide-react-native';
 import Colors from '@/constants/Colors';
 import ExpenseSummaryCard from '@/components/expense/ExpenseSummaryCard';
 import BudgetProgressCard from '@/components/budget/BudgetProgressCard';
@@ -37,19 +42,31 @@ export default function DashboardScreen() {
   useEffect(() => {
     if (expenses.length > 0) {
       // Calculate total spent
-      const total = expenses.reduce((sum, expense) => sum + parseFloat(expense.amount), 0);
+      const total = expenses.reduce(
+        (sum, expense) => sum + parseFloat(expense.amount),
+        0
+      );
       setTotalSpent(total);
 
       // Process category data for pie chart
       const categories: { [key: string]: number } = {};
       expenses.forEach((expense) => {
-        const category = expense.category || 'Other';
-        categories[category] = (categories[category] || 0) + parseFloat(expense.amount);
+        const category = expense?.category || 'Other';
+        categories[category] =
+          (categories[category] || 0) + parseFloat(expense.amount);
       });
 
       const colors = [
-        '#FF9500', '#FF2D55', '#5AC8FA', '#007AFF', '#5856D6',
-        '#AF52DE', '#FF3B30', '#34C759', '#FFCC00', '#64D2FF'
+        '#FF9500',
+        '#FF2D55',
+        '#5AC8FA',
+        '#007AFF',
+        '#5856D6',
+        '#AF52DE',
+        '#FF3B30',
+        '#34C759',
+        '#FFCC00',
+        '#64D2FF',
       ];
 
       const pieData = Object.keys(categories).map((category, index) => ({
@@ -76,24 +93,39 @@ export default function DashboardScreen() {
       }
 
       expenses.forEach((expense) => {
-        const expenseDate = new Date(expense.date);
-        const monthKey = `${expenseDate.getFullYear()}-${expenseDate.getMonth() + 1}`;
+        const expenseDate = new Date(expense?.date);
+        const monthKey = `${expenseDate.getFullYear()}-${
+          expenseDate.getMonth() + 1
+        }`;
         if (monthlyExpenses[monthKey] !== undefined) {
           monthlyExpenses[monthKey] += parseFloat(expense.amount);
         }
       });
 
       const months = Object.keys(monthlyExpenses).sort();
-      const monthLabels = months.map(m => {
+      const monthLabels = months.map((m) => {
         const [year, month] = m.split('-');
-        return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][parseInt(month) - 1];
+        return [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ][parseInt(month) - 1];
       });
-      
+
       setMonthlyData({
         labels: monthLabels,
         datasets: [
           {
-            data: months.map(m => monthlyExpenses[m]),
+            data: months.map((m) => monthlyExpenses[m]),
             color: (opacity = 1) => `rgba(10, 132, 255, ${opacity})`,
             strokeWidth: 2,
           },
@@ -120,35 +152,44 @@ export default function DashboardScreen() {
   // Find most expensive category
   let maxCategory = { name: 'None', amount: 0 };
   if (categoryData.length > 0) {
-    maxCategory = categoryData.reduce((max, cat) => cat.amount > max.amount ? cat : max, categoryData[0]);
+    maxCategory = categoryData.reduce(
+      (max, cat) => (cat.amount > max.amount ? cat : max),
+      categoryData[0]
+    );
   }
 
   // Get closest budget to limit
   const sortedBudgets = [...budgets].sort((a, b) => {
-    const aPercentage = (parseFloat(a.currentAmount) / parseFloat(a.limit)) * 100;
-    const bPercentage = (parseFloat(b.currentAmount) / parseFloat(b.limit)) * 100;
+    const aPercentage =
+      (parseFloat(a.currentAmount) / parseFloat(a.limit)) * 100;
+    const bPercentage =
+      (parseFloat(b.currentAmount) / parseFloat(b.limit)) * 100;
     return bPercentage - aPercentage;
   });
 
   const criticalBudget = sortedBudgets.length > 0 ? sortedBudgets[0] : null;
-  const criticalPercentage = criticalBudget 
-    ? (parseFloat(criticalBudget.currentAmount) / parseFloat(criticalBudget.limit)) * 100 
+  const criticalPercentage = criticalBudget
+    ? (parseFloat(criticalBudget.currentAmount) /
+        parseFloat(criticalBudget.limit)) *
+      100
     : 0;
 
   return (
-    <ScrollView 
+    <ScrollView
       style={styles.container}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
       <View style={styles.header}>
-        <Text style={styles.greeting}>Hello, {user?.email || user?.username || 'User'}</Text>
+        <Text style={styles.greeting}>
+          Hello, {user?.email || user?.username || 'User'}
+        </Text>
         <Text style={styles.date}>
-          {new Date().toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            month: 'long', 
-            day: 'numeric' 
+          {new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
           })}
         </Text>
       </View>
@@ -159,16 +200,25 @@ export default function DashboardScreen() {
       </View>
 
       <View style={styles.summaryContainer}>
-        <ExpenseSummaryCard 
+        <ExpenseSummaryCard
           title="Highest Expense"
-          amount={expenses.length > 0 ? Math.max(...expenses.map(e => parseFloat(e.amount))) : 0}
+          amount={
+            expenses?.length > 0
+              ? Math.max(
+                  ...expenses
+                    .map((e) => parseFloat(e?.amount))
+                    .filter((val) => !isNaN(val))
+                )
+              : 0
+          }
           icon={<TrendingUp size={20} color="#FF453A" />}
           color="#FFEFED"
           textColor="#FF453A"
         />
-        <ExpenseSummaryCard 
+
+        <ExpenseSummaryCard
           title="Average Expense"
-          amount={expenses.length > 0 ? totalSpent / expenses.length : 0}
+          amount={expenses?.length > 0 ? totalSpent / expenses?.length : 0}
           icon={<DollarSign size={20} color="#30D158" />}
           color="#E9F9EF"
           textColor="#30D158"
@@ -181,7 +231,8 @@ export default function DashboardScreen() {
           <View style={styles.alertContent}>
             <Text style={styles.alertTitle}>Budget Alert</Text>
             <Text style={styles.alertMessage}>
-              Your {criticalBudget.category} budget is {criticalPercentage.toFixed(0)}% used
+              Your {criticalBudget.category} budget is{' '}
+              {criticalPercentage.toFixed(0)}% used
             </Text>
           </View>
         </View>
@@ -190,8 +241,8 @@ export default function DashboardScreen() {
       {budgets.length > 0 && (
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Budget Progress</Text>
-          <ScrollView 
-            horizontal 
+          <ScrollView
+            horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.budgetsScroll}
           >
@@ -222,13 +273,15 @@ export default function DashboardScreen() {
               absolute
             />
           </View>
-          
+
           <View style={styles.insightCard}>
             <TrendingUp size={20} color="#0A84FF" style={styles.insightIcon} />
             <Text style={styles.insightText}>
               Your highest spending category is{' '}
               <Text style={styles.insightHighlight}>{maxCategory.name}</Text> at{' '}
-              <Text style={styles.insightHighlight}>{formatCurrency(maxCategory.amount)}</Text>
+              <Text style={styles.insightHighlight}>
+                {formatCurrency(maxCategory.amount)}
+              </Text>
             </Text>
           </View>
         </View>
@@ -266,19 +319,43 @@ export default function DashboardScreen() {
 
           {monthlyData.datasets[0].data.length >= 2 && (
             <View style={styles.insightCard}>
-              {monthlyData.datasets[0].data[monthlyData.datasets[0].data.length - 1] > 
-               monthlyData.datasets[0].data[monthlyData.datasets[0].data.length - 2] ? (
+              {monthlyData.datasets[0].data[
+                monthlyData.datasets[0].data.length - 1
+              ] >
+              monthlyData.datasets[0].data[
+                monthlyData.datasets[0].data.length - 2
+              ] ? (
                 <>
-                  <TrendingUp size={20} color="#FF453A" style={styles.insightIcon} />
+                  <TrendingUp
+                    size={20}
+                    color="#FF453A"
+                    style={styles.insightIcon}
+                  />
                   <Text style={styles.insightText}>
-                    Your spending has <Text style={[styles.insightHighlight, {color: '#FF453A'}]}>increased</Text> compared to last month
+                    Your spending has{' '}
+                    <Text
+                      style={[styles.insightHighlight, { color: '#FF453A' }]}
+                    >
+                      increased
+                    </Text>{' '}
+                    compared to last month
                   </Text>
                 </>
               ) : (
                 <>
-                  <TrendingDown size={20} color="#30D158" style={styles.insightIcon} />
+                  <TrendingDown
+                    size={20}
+                    color="#30D158"
+                    style={styles.insightIcon}
+                  />
                   <Text style={styles.insightText}>
-                    Your spending has <Text style={[styles.insightHighlight, {color: '#30D158'}]}>decreased</Text> compared to last month
+                    Your spending has{' '}
+                    <Text
+                      style={[styles.insightHighlight, { color: '#30D158' }]}
+                    >
+                      decreased
+                    </Text>{' '}
+                    compared to last month
                   </Text>
                 </>
               )}
@@ -290,25 +367,39 @@ export default function DashboardScreen() {
       <View style={styles.recentExpensesContainer}>
         <View style={styles.recentExpensesHeader}>
           <Text style={styles.sectionTitle}>Recent Expenses</Text>
-          <TouchableOpacity onPress={() =>{
-            // Navigate to expenses screen
-            navigation.navigate('/(tabs)/expenses');
-          }}>
+          <TouchableOpacity
+            onPress={() => {
+              // Navigate to expenses screen
+              navigation.navigate('/(tabs)/expenses');
+            }}
+          >
             <Text style={styles.viewAllText}>View All</Text>
           </TouchableOpacity>
         </View>
-        
+
         {expenses.slice(0, 3).map((expense) => (
           <View key={expense.id} style={styles.expenseItem}>
-            <View style={[styles.categoryDot, { backgroundColor: getCategoryColor(expense.category) }]} />
+            <View
+              style={[
+                styles.categoryDot,
+                { backgroundColor: getCategoryColor(expense.category) },
+              ]}
+            />
             <View style={styles.expenseDetails}>
               <Text style={styles.expenseTitle}>{expense.name}</Text>
-              <Text style={styles.expenseCategory}>{expense.category || "Other"}</Text>
+              <Text style={styles.expenseCategory}>
+                {expense.category || 'Other'}
+              </Text>
             </View>
             <View style={styles.expenseAmountContainer}>
-              <Text style={styles.expenseAmount}>-{formatCurrency(expense.amount)}</Text>
+              <Text style={styles.expenseAmount}>
+                -{formatCurrency(expense.amount)}
+              </Text>
               <Text style={styles.expenseDate}>
-                {new Date(expense.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                {new Date(expense.createdAt).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                })}
               </Text>
             </View>
           </View>
@@ -330,7 +421,7 @@ function getCategoryColor(category: string): string {
     Education: '#34C759',
     Travel: '#FFCC00',
   };
-  
+
   return categoryColors[category] || '#64D2FF';
 }
 
